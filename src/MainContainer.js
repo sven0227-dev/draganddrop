@@ -104,8 +104,7 @@ class MainContainer extends React.Component {
             }}
             cancel='.react-resizable-handle'
           >
-            <div style={{ width: '100px', height: '100px',backgroundColor:'red' }}></div>
-            {/* <Resizable
+            <Resizable
               width={subContainer.width}
               height={subContainer.height}
               onResizeStop={(event, data) => {
@@ -146,7 +145,7 @@ class MainContainer extends React.Component {
                   }}
                 />
               </div>
-            </Resizable> */}
+            </Resizable>
           </Draggable>
         ))}
       </div>
