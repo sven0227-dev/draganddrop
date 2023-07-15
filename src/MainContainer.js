@@ -15,9 +15,13 @@ class MainContainer extends React.Component {
 
   handleDrop (event) {
     event.preventDefault()
+    const rect = event.currentTarget.getBoundingClientRect()
     const color = event.dataTransfer.getData('color')
-    const x = Math.round(event.clientX / GRID_SIZE) * GRID_SIZE
-    const y = Math.round(event.clientY / GRID_SIZE) * GRID_SIZE
+    console.log('rect :>> ', rect)
+    console.log('event.clientY :>> ', event.clientY)
+    const x = ((event.clientX - rect.left) / GRID_SIZE) * GRID_SIZE
+    const y = ((event.clientY - rect.top) / GRID_SIZE) * GRID_SIZE
+    console.log('x,y :>> ', x, y)
     const subContainer = {
       id: Date.now(),
       color: color,
@@ -30,10 +34,13 @@ class MainContainer extends React.Component {
       subContainers: [...prevState.subContainers, subContainer]
     }))
   }
+  onMouseMove (event) {
+    // console.log('event.clientX :>> ', event.clientY)
+  }
 
   render () {
     const { subContainers } = this.state
-
+    console.log('subContainers :>> ', subContainers)
     return (
       <div
         onDrop={this.handleDrop}
@@ -46,6 +53,7 @@ class MainContainer extends React.Component {
           backgroundColor: 'white',
           userSelect: 'none'
         }}
+        onMouseMove={this.onMouseMove}
       >
         {[...Array(50)].map((_, index) => (
           <div
@@ -96,7 +104,8 @@ class MainContainer extends React.Component {
             }}
             cancel='.react-resizable-handle'
           >
-            <Resizable
+            <div style={{ width: '100px', height: '100px',backgroundColor:'red' }}></div>
+            {/* <Resizable
               width={subContainer.width}
               height={subContainer.height}
               onResizeStop={(event, data) => {
@@ -137,7 +146,7 @@ class MainContainer extends React.Component {
                   }}
                 />
               </div>
-            </Resizable>
+            </Resizable> */}
           </Draggable>
         ))}
       </div>
